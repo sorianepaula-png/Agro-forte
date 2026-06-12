@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raízes do Amanhã - Painel Oficial Agrinho 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --brand-green-dark: #0f3622;
+            --brand-green-mid: #1c5936;
+            --brand-green-light: #7cb342;
+            --brand-lime: #a3e635;
+            --brand-lime-hover: #baf255;
+            --bg-canvas: #f4f7f5;
+            --bg-card: #ffffff;
+            --text-main: #14241c;
+            --text-muted: #5c7066;
+            --ui-border: #e2e9e5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-canvas); color: var(--text-main); overflow-x: hidden; }
+
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* ==========================================================================
+           BARRA LATERAL (SIDEBAR) - IDENTIDADE FIEL À IMAGEM PROTÓTIPO
+           ========================================================================== */
+        .app-sidebar { width: 300px; background-color: var(--brand-green-dark); padding: 30px 20px; display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; z-index: 10; }
+        .sidebar-header { display: flex; align-items: center; gap: 15px; margin-bottom: 35px; padding-left: 5px; }
+        .logo-box { background: rgba(255, 255, 255, 0.1); width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--brand-lime); font-size: 1.4rem; }
+        .logo-text h2 { font-size: 1.1rem; font-weight: 800; color: white; letter-spacing: -0.3px; }
+        .logo-text p { font-size: 0.78rem; color: #a1c2b0; font-weight: 500; }
+
+        .sidebar-navigation { display: flex; flex-direction: column; gap: 6px; }
+        .nav-btn { display: flex; align-items: center; gap: 14px; background: none; border: none; width: 100%; padding: 14px 18px; border-radius: 14px; color: #a1c2b0; font-size: 0.92rem; font-weight: 600; text-align: left; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-btn i { width: 20px; font-size: 1.1rem; text-align: center; }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+        .nav-btn.active { background: var(--brand-lime); color: var(--brand-green-dark); font-weight: 700; box-shadow: 0 4px 12px rgba(163, 230, 53, 0.25); }
+
+        /* Card do Agrinho Incorporado com os Personagens */
+        .sidebar-agrinho-card { margin-top: auto; background: linear-gradient(180deg, #18472f 0%, #0c2619 100%); border: 1px solid rgba(255,255,255,0.08); padding: 22px; border-radius: 20px; text-align: center; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .sidebar-agrinho-card h3 { color: white; font-size: 1.1rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .sidebar-agrinho-card h3 span { color: var(--brand-lime); }
+        .sidebar-agrinho-card p { font-size: 0.72rem; color: #a1c2b0; font-weight: 500; margin-bottom: 15px; line-height: 1.3; }
+        .character-avatar-row { display: flex; justify-content: center; gap: -10px; margin-bottom: 15px; }
+        .char-avatar { width: 45px; height: 45px; border-radius: 50%; border: 3px solid #18472f; background-size: cover; background-position: center; margin: 0 -5px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .action-link-sidebar { background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.12); padding: 10px; width: 100%; border-radius: 12px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+        .action-link-sidebar:hover { background: white; color: var(--brand-green-dark); }
+
+        /* ==========================================================================
+           ÁREA DE CONTEÚDO PRINCIPAL (VIEWPORT)
+           ========================================================================== */
+        .app-viewport { flex: 1; padding: 40px 50px; max-width: 1500px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; overflow-y: auto; }
+        
+        /* Topbar de Status */
+        .app-topbar { display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 25px; }
+        .profile-capsule { background: white; padding: 10px 20px; border-radius: 30px; border: 1px solid var(--ui-border); display: flex; align-items: center; gap: 12px; font-size: 0.88rem; font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .pulse-indicator { width: 8px; height: 8px; background: var(--brand-lime); border-radius: 50%; box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.4); }
+        .icon-notification-btn { background: white; border: 1px solid var(--ui-border); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; color: var(--text-muted); cursor: pointer; position: relative; }
+        .badge-count { position: absolute; top: -2px; right: -2px; background: #ef4444; color: white; font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* Hero Banner Curvado de Alta Fidelidade */
+        .dynamic-hero-banner { background: linear-gradient(135deg, var(--brand-green-dark) 35%, rgba(15, 54, 34, 0.9) 65%, transparent 100%), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad451?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center right; border-radius: 28px; padding: 50px; color: white; display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; box-shadow: 0 12px 35px rgba(15, 54, 34, 0.08); position: relative; }
+        .hero-info-side h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+        .hero-info-side h1 span { color: var(--brand-lime); }
+        .hero-info-side .subtitle-inst { color: #a1c2b0; font-size: 0.95rem; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hero-info-side .motivational-quote { background: rgba(163, 230, 53, 0.1); border-left: 4px solid var(--brand-lime); padding: 8px 16px; font-size: 1.05rem; font-weight: 700; color: var(--brand-lime); margin-bottom: 18px; max-width: 580px; border-radius: 0 8px 8px 0; }
+        .hero-info-side p.desc-p { color: #d0e1d8; font-size: 0.95rem; max-width: 600px; line-height: 1.6; font-weight: 500; }
+        
+        .hero-chips-side { display: flex; flex-direction: column; gap: 10px; min-width: 220px; }
+        .hero-pill-badge { background: rgba(255,255,255,0.95); color: var(--brand-green-dark); padding: 10px 18px; border-radius: 16px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .hero-pill-badge i { color: var(--brand-green-mid); font-size: 1rem; }
+
+        /* ==========================================================================
+           ESTRUTURAS DO SIMULADOR (ABA 1)
+           ========================================================================== */
+        .content-workspace-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 35px; align-items: start; }
+        .dashboard-panel-card { background: var(--bg-card); border-radius: 24px; padding: 35px; border: 1px solid var(--ui-border); box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .dashboard-panel-card h3.section-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+        .dashboard-panel-card p.section-subtitle { font-size: 0.88rem; color: var(--text-muted); font-weight: 500; margin-bottom: 25px; }
+
+        /* Controles de Formulário Modernos */
+        .interactive-form-group { margin-bottom: 24px; }
+        .interactive-form-group label { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+        .interactive-form-group label i { color: var(--brand-green-mid); font-size: 1.05rem; }
+        .select-ui-wrapper { position: relative; }
+        .select-ui-element { width: 100%; padding: 16px 20px; border-radius: 16px; border: 1px solid var(--ui-border); background: #fafcfb; font-family: inherit; font-size: 0.95rem; font-weight: 600; color: var(--text-main); outline: none; transition: all 0.2s ease; appearance: none; cursor: pointer; }
+        .select-ui-element:focus { border-color: var(--brand-green-mid); background: white; box-shadow: 0 0 0 4px rgba(28, 89, 54, 0.06); }
+        .select-ui-wrapper::after { content: "\f107"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; font-size: 1.1rem; }
+
+        .btn-primary-trigger { width: 100%; background: var(--brand-green-mid); color: white; border: none; padding: 18px; border-radius: 16px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(28, 89, 54, 0.15); }
+        .btn-primary-trigger:hover { background: var(--brand-green-dark); transform: translateY(-1px); }
+
+        /* Painel de Resultados Pro */
+        .score-display-box { display: flex; justify-content: space-between; align-items: center; background: #fafcfb; border: 1px solid var(--ui-border); padding: 25px; border-radius: 20px; margin-bottom: 30px; }
+        .score-metrics-meta h5 { font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 2px; }
+        .score-big-num { font-size: 2.8rem; font-weight: 800; color: var(--brand-green-dark); letter-spacing: -1px; }
+        .score-big-num span { font-size: 1.3rem; color: var(--text-muted); font-weight: 600; }
+        
+        .badge-status-output { display: flex; align-items: center; gap: 10px; background: #e2e9e5; color: var(--text-muted); padding: 10px 20px; border-radius: 30px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-status-output.success { background: #eefdf4; color: #155724; }
+
+        .category-bars-container { display: flex; flex-direction: column; gap: 18px; margin-bottom: 30px; }
+        .bar-row h6 { font-size: 0.88rem; font-weight: 700; display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .bar-track { width: 100%; height: 10px; background: #e2e9e5; border-radius: 20px; overflow: hidden; }
+        .bar-progress-fill { height: 100%; background: var(--brand-green-light); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .output-logs-stack { display: flex; flex-direction: column; gap: 10px; }
+        .log-bubble { padding: 16px 20px; border-radius: 16px; font-size: 0.88rem; font-weight: 600; line-height: 1.5; display: flex; align-items: flex-start; gap: 12px; border: 1px solid transparent; animation: animCardIn 0.3s ease; }
+        .log-bubble.success { background: #eefdf4; color: #166534; border-color: #d1fae5; }
+        .log-bubble.danger { background: #fef2f2; color: #991b1b; border-color: #fee2e2; }
+
+        /* ==========================================================================
+           BIBLIOTECA DIGITAL DE AGROECOLOGIA (ABA 2)
+           ========================================================================= */
+        .agro-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .agro-concept-card { background: white; border: 1px solid var(--ui-border); border-radius: 20px; padding: 25px; cursor: pointer; transition: all 0.2s ease; border-left: 5px solid var(--brand-green-light); }
+        .agro-concept-card:hover { transform: translateY(-2px); border-color: var(--brand-green-mid); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
+        .concept-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+        .concept-icon-frame { width: 42px; height: 42px; background: #fafcfb; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--brand-green-mid); font-size: 1.1rem; }
+        .concept-header h4 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.2px; }
+        .agro-concept-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; font-weight: 500; }
+
+        /* ==========================================================================
+           SISTEMA DE QUIZZES EXPANDIDO - 3 NÍVEIS COM 10 QUESTÕES CADA (ABA 3)
+           ========================================================================== */
+        .quiz-hub-layout { display: flex; flex-direction: column; gap: 25px; }
+        .quiz-level-selector-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .level-select-card { background: white; border: 1px solid var(--ui-border); padding: 18px; border-radius: 18px; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: all 0.2s; }
+        .level-select-card:hover { border-color: var(--brand-green-mid); }
+        .level-select-card.active { border-color: var(--brand-green-mid); background: #fafcfb; box-shadow: 0 0 0 3px rgba(28, 89, 54, 0.05); }
+        .level-indicator-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .level-meta h5 { font-size: 0.95rem; font-weight: 700; }
+        .level-meta p { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
+
+        .quiz-stage-card { background: white; border: 1px solid var(--ui-border); border-radius: 24px; padding: 35px; }
+        .quiz-progress-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+        .quiz-question-box { background: #fafcfb; border: 1px solid var(--ui-border); padding: 25px; border-radius: 18px; font-size: 1.1rem; font-weight: 700; line-height: 1.5; margin-bottom: 25px; display: flex; gap: 14px; }
+        .quiz-question-box i { color: var(--brand-green-mid); margin-top: 4px; }
+        
+        .quiz-options-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+        .option-item-row { background: white; border: 1px solid var(--ui-border); padding: 18px 22px; border-radius: 16px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: all 0.2s; user-select: none; }
+        .option-item-row:hover { border-color: var(--brand-green-mid); background: #fafcfb; }
+        .option-item-row.selected { border-color: var(--brand-green-mid); background: #eefdf4; font-weight: 700; }
+        .option-item-row input[type="radio"] { width: 18px; height: 18px; accent-color: var(--brand-green-mid); cursor: pointer; }
+
+        .quiz-control-actions { display: flex; gap: 15px; }
+        .btn-secondary { background: #e2e9e5; color: var(--text-main); border: none; padding: 16px 25px; border-radius: 16px; font-family: inherit; font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .btn-secondary:hover:not(:disabled) { background: #cbd4cf; }
+        .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .quiz-inline-feedback { margin-top: 25px; padding: 20px; border-radius: 16px; font-size: 0.92rem; font-weight: 600; line-height: 1.5; display: flex; align-items: flex-start; gap: 12px; border: 1px solid transparent; }
+        .quiz-inline-feedback.correct { background: #eefdf4; color: #166534; border-color: #bbf7d0; }
+        .quiz-inline-feedback.wrong { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+
+        /* ==========================================================================
+           MATERIAIS DE APOIO - LINKS COMPLETOS E PROFISSIONAIS (ABA 4)
+           ========================================================================== */
+        .materials-layout-list { display: flex; flex-direction: column; gap: 16px; }
+        .material-download-row { background: white; border: 1px solid var(--ui-border); padding: 22px 28px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .material-download-row:hover { border-color: var(--brand-green-mid); transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .material-meta-side { display: flex; align-items: center; gap: 20px; }
+        .material-avatar-box { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        .material-info-text h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 3px; }
+        .material-info-text p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .material-action-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 700; }
+
+        /* ==========================================================================
+           DESAFIOS & PROGRESSO (ABAS 5 E 6)
+           ========================================================================== */
+        .timeline-track-vertical { position: relative; padding-left: 35px; border-left: 3px dashed var(--ui-border); margin-left: 20px; }
+        .timeline-node { position: relative; margin-bottom: 35px; }
+        .node-bullet { position: absolute; left: -48px; top: 2px; width: 22px; height: 22px; border-radius: 50%; background: white; border: 4px solid #cbd4cf; transition: all 0.3s; }
+        .timeline-node.achieved .node-bullet { background: var(--brand-green-mid); border-color: var(--brand-lime); box-shadow: 0 0 0 4px rgba(163, 230, 53, 0.25); }
+        .node-content-card { background: white; border: 1px solid var(--ui-border); padding: 22px; border-radius: 18px; transition: all 0.2s; }
+        .timeline-node.achieved .node-content-card { border-color: #bbf7d0; background: #fafdfb; }
+        .node-tag { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; background: #e2e9e5; color: var(--text-muted); display: inline-block; margin-bottom: 10px; }
+        .timeline-node.achieved .node-tag { background: #eefdf4; color: #166534; }
+        .node-content-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+        .node-content-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+        .stats-grid-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 35px; }
+        .stat-box-card { background: white; border: 1px solid var(--ui-border); padding: 30px 20px; border-radius: 22px; text-align: center; }
+        .stat-box-card .val { font-size: 2.6rem; font-weight: 800; color: var(--brand-green-dark); display: block; margin-bottom: 2px; }
+        .stat-box-card .lbl { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .gallery-shelf { display: flex; justify-content: center; gap: 30px; padding: 20px 0; }
+        .medal-case { width: 90px; height: 90px; border-radius: 50%; background: #e2e9e5; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #a1c2b0; position: relative; border: 2px dashed #cbd4cf; }
+        .medal-case.unlocked { background: #fffbeb; border: 2px solid #fde047; color: #ca8a04; transform: scale(1.05); box-shadow: 0 10px 25px rgba(202,138,4,0.15); }
+        .medal-case::after { content: attr(data-tip); position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; color: var(--text-main); }
+        .medal-case:hover::after { opacity: 1; }
+
+        /* ==========================================================================
+           FOOTER BADGES EXTRA - IGUAL À BASE DO PROTÓTIPO
+           ========================================================================== */
+        .footer-badges-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: auto; padding-top: 35px; }
+        .footer-badge-item { background: white; border: 1px solid var(--ui-border); padding: 15px 20px; border-radius: 16px; display: flex; align-items: center; gap: 12px; }
+        .footer-badge-item i { font-size: 1.3rem; color: var(--brand-green-mid); }
+        .footer-badge-meta h5 { font-size: 0.85rem; font-weight: 700; }
+        .footer-badge-meta p { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+
+        /* Modal Interno Overlay */
+        .app-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 54, 34, 0.4); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-card { background: white; max-width: 550px; width: 100%; border-radius: 26px; padding: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); animation: animCardIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes animCardIn { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.4px; }
+        .modal-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
+
+        .tab-content-panel { display: none; animation: animCardIn 0.35s ease; }
+        .tab-content-panel.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="app-layout">
+        
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box"><i class="fa-solid fa-seedling"></i></div>
+                <div class="logo-text">
+                    <h2>C.E. Ernestina W.</h2>
+                    <p>Antônio Olinto - PR</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-navigation">
+                <button class="nav-btn active" onclick="navegarAba('panel-simulador', this)"><i class="fa-solid fa-chart-pie"></i> Painel</button>
+                <button class="nav-btn" onclick="navegarAba('panel-agroecologia', this)"><i class="fa-solid fa-leaf"></i> Agroecologia</button>
+                <button class="nav-btn" onclick="navegarAba('panel-quiz', this)"><i class="fa-solid fa-graduation-cap"></i> Lições</button>
+                <button class="nav-btn" onclick="navegarAba('panel-materiais', this)"><i class="fa-solid fa-folder-open"></i> Materiais de Apoio</button>
+                <button class="nav-btn" onclick="navegarAba('panel-desafios', this)"><i class="fa-solid fa-trophy"></i> Desafios Agrinho 2026</button>
+                <button class="nav-btn" onclick="navegarAba('panel-progresso', this)"><i class="fa-solid fa-chart-line"></i> Meu Progresso</button>
+            </nav>
+
+            <div class="sidebar-agrinho-card">
+                <h3>AGRINHO <span>2026</span></h3>
+                <p>Cultivando ideias, transformando o futuro!</p>
+                <div class="character-avatar-row">
+                    <div class="char-avatar" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80');"></div>
+                    <div class="char-avatar" style="background-image: url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80');"></div>
+                </div>
+                <button class="action-link-sidebar" onclick="navegarAba('panel-desafios', document.querySelectorAll('.nav-btn')[4])">Quero Participar</button>
+            </div>
+        </aside>
+
+        <main class="app-viewport">
+            
+            <div class="app-topbar">
+                <button class="icon-notification-btn"><i class="fa-solid fa-bell"></i><span class="badge-count">2</span></button>
+                <div class="profile-capsule"><span class="pulse-indicator"></span> Olá, Escola!</div>
+            </div>
+
+            <header class="dynamic-hero-banner">
+                <div class="hero-info-side">
+                    <h1>Raízes do <span>Amanhã</span></h1>
+                    <div class="subtitle-inst">C. E. Ernestina W. da Silveira | Antônio Olinto - PR</div>
+                    <div class="motivational-quote">Agro forte, futuro sustentável: equilíbrio entre produção e meio ambiente.</div>
+                    <p class="desc-p">No interior de Antônio Olinto, a agricultura familiar impulsiona a nossa comunidade. Nós, estudantes do Ensino Fundamental e Médio, desenvolvemos este painel para avaliar e sugerir melhorias sustentáveis baseadas nas diretrizes ambientais.</p>
+                </div>
+                <div class="hero-chips-side">
+                    <div class="hero-pill-badge"><i class="fa-solid fa-wheat-awn"></i> Produção Consciente</div>
+                    <div class="hero-pill-badge"><i class="fa-solid fa-cloud-sun-rain"></i> Meio Ambiente Preservado</div>
+                    <div class="hero-pill-badge"><i class="fa-solid fa-users"></i> Comunidade Fortalecida</div>
+                    <div class="hero-pill-badge"><i class="fa-solid fa-hourglass-end"></i> Futuro Sustentável</div>
+                </div>
+            </header>
+
+            <div id="panel-simulador" class="tab-content-panel active">
+                <div class="content-workspace-grid">
+                    <section class="dashboard-panel-card">
+                        <h3 class="section-title"><i class="fa-solid fa-sliders"></i> Simulador de Diagnóstico Agro-Ambiental</h3>
+                        <p class="section-subtitle">Selecione as práticas atuais da propriedade rústica para analisar o desempenho:</p>
+                        
+                        <form id="form-diagnostico">
+                            <div class="interactive-form-group">
+                                <label><i class="fa-solid fa-seedling"></i> 1. Manejo do Solo</label>
+                                <div class="select-ui-wrapper">
+                                    <select id="sim-solo" class="select-ui-element">
+                                        <option value="100">Plantio Direto & Rotação de Culturas</option>
+                                        <option value="30">Monocultura com aração convencional e queima</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="interactive-form-group">
+                                <label><i class="fa-solid fa-droplet"></i> 2. Recursos Hídricos (APP)</label>
+                                <div class="select-ui-wrapper">
+                                    <select id="sim-agua" class="select-ui-element">
+                                        <option value="100">Preservação total da Mata Ciliar e Nascentes</option>
+                                        <option value="20">Ausência de mata ciliar e gado com livre acesso</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="interactive-form-group">
+                                <label><i class="fa-solid fa-flask"></i> 3. Manejo de Insumos</label>
+                                <div class="select-ui-wrapper">
+                                    <select id="sim-insumos" class="select-ui-element">
+                                        <option value="100">Tríplice lavagem e devolução correta de embalagens</option>
+                                        <option value="40">Uso intensivo de defensivos pesados sem proteção</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="interactive-form-group">
+                                <label><i class="fa-solid fa-paw"></i> 4. Biodiversidade & Fauna</label>
+                                <div class="select-ui-wrapper">
+                                    <select id="sim-fauna" class="select-ui-element">
+                                        <option value="100">Manutenção de faixas de refúgio e matas nativas</option>
+                                        <option value="10">Remoção total da vegetação e uso de defensivos sem controle</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-primary-trigger" onclick="rodarSimuladorDiagnostico()">
+                                <i class="fa-solid fa-gears"></i> Gerar Diagnóstico
+                            </button>
+                        </form>
+                    </section>
+
+                    <section class="dashboard-panel-card">
+                        <h3 class="section-title"><i class="fa-solid fa-square-poll-vertical"></i> Resultado do Diagnóstico</h3>
+                        <p class="section-subtitle">Métricas calculadas em tempo real com base nas diretrizes do campo:</p>
+
+                        <div class="score-display-box">
+                            <div class="score-metrics-meta">
+                                <h5>Pontuação Geral</h5>
+                                <div class="score-big-num" id="txt-score-geral">--<span>/100</span></div>
+                            </div>
+                            <div class="badge-status-output" id="badge-score-status">Aguardando Ação</div>
+                        </div>
+
+                        <div class="category-bars-container">
+                            <div class="bar-row">
+                                <h6><span>Práticas de Cultivo</span><span id="txt-bar-1">0%</span></h6>
+                                <div class="bar-track"><div id="fill-bar-1" class="bar-progress-fill"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <h6><span>Conservação Ambiental</span><span id="txt-bar-2">0%</span></h6>
+                                <div class="bar-track"><div id="fill-bar-2" class="bar-progress-fill"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <h6><span>Gestão & Sociedade</span><span id="txt-bar-3">0%</span></h6>
+                                <div class="bar-track"><div id="fill-bar-3" class="bar-progress-fill"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="output-logs-stack" id="diagnostico-logs-target"></div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="panel-agroecologia" class="tab-content-panel">
+                <section class="dashboard-panel-card">
+                    <h3 class="section-title"><i class="fa-solid fa-book-open-reader"></i> Biblioteca Digital de Agroecologia</h3>
+                    <p class="section-subtitle">Aprenda os conceitos fundamentais para o campo propostos pelo Projeto Agrinho:</p>
+                    
+                    <div class="agro-cards-grid">
+                        <div class="agro-concept-card" onclick="exibirModalInfo('O que é Agroecologia?', 'É a ciência que estuda e desenvolve modelos agrícolas baseados na proteção ecológica. Ao contrário da agricultura química tradicional, ela trabalha de forma integrada com a natureza, protegendo microrganismos vivos do solo e restaurando ciclos ambientais locais.')">
+                            <div class="concept-header">
+                                <div class="concept-icon-frame"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <h4>O que é Agroecologia?</h4>
+                            </div>
+                            <p>Entenda a ciência que equilibra a produção de alimentos com a preservação biológica...</p>
+                        </div>
+                        <div class="agro-concept-card" onclick="exibirModalInfo('Importância do Plantio Direto', 'Técnica onde as sementes são colocadas na terra sem arar o solo. A palhada da colheita anterior cobre o chão, impedindo que a chuva lave os nutrientes da terra e mantendo a umidade por muito mais tempo.')">
+                            <div class="concept-header">
+                                <div class="concept-icon-frame"><i class="fa-solid fa-tractor"></i></div>
+                                <h4>Importância do Plantio Direto</h4>
+                            </div>
+                            <p>Cultivar sem quebrar a terra, guardando a água e os microrganismos protetores...</p>
+                        </div>
+                        <div class="agro-concept-card" onclick="exibirModalInfo('Proteção de Nascentes (APP)', 'Rios limpos exigem florestas nas beiradas. A vegetação nativa ao redor das fontes de água segura a terra, funcionando como um filtro natural gigante contra defensivos levados pelo vento ou pelas enxurradas.')">
+                            <div class="concept-header">
+                                <div class="concept-icon-frame"><i class="fa-solid fa-droplet"></i></div>
+                                <h4>Proteção de Nascentes (APP)</h4>
+                            </div>
+                            <p>Como matas ciliares robustas garantem a segurança hídrica da propriedade...</p>
+                        </div>
+                        <div class="agro-concept-card" onclick="exibirModalInfo('Biodiversidade Funcional', 'Manter árvores e matas nativas perto das plantações preserva insetos benéficos (como joaninhas e pássaros) que controlam as pragas de forma natural, reduzindo custos com agrotóxicos.')">
+                            <div class="concept-header">
+                                <div class="concept-icon-frame"><i class="fa-solid fa-bug"></i></div>
+                                <h4>Biodiversidade Funcional</h4>
+                            </div>
+                            <p>Uso ecológico de predadores naturais para controle biológico de pragas da lavoura...</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="panel-quiz" class="tab-content-panel">
+                <div class="quiz-hub-layout">
+                    
+                    <div class="quiz-level-selector-tabs">
+                        <div class="level-select-card active" id="tab-lvl-0" onclick="selecionarNivelQuiz(0)">
+                            <div class="level-indicator-dot" style="background: #22c55e;"></div>
+                            <div class="level-meta"><h5>Módulo Iniciante</h5><p>Fundamentos da palhada e água</p></div>
+                        </div>
+                        <div class="level-select-card" id="tab-lvl-1" onclick="selecionarNivelQuiz(1)">
+                            <div class="level-indicator-dot" style="background: #eab308;"></div>
+                            <div class="level-meta"><h5>Módulo Intermediário</h5><p>Manejo químico e agrofloresta</p></div>
+                        </div>
+                        <div class="level-select-card" id="tab-lvl-2" onclick="selecionarNivelQuiz(2)">
+                            <div class="level-indicator-dot" style="background: #ef4444;"></div>
+                            <div class="level-meta"><h5>Módulo Avançado</h5><p>Legislação e bioinsumos pro</p></div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-stage-card">
+                        <div class="quiz-progress-top-row">
+                            <span id="quiz-lbl-nivel">Nível: Fácil</span>
+                            <span id="quiz-lbl-contador">Questão: 1 / 10</span>
+                        </div>
+
+                        <div class="quiz-question-box">
+                            <i class="fa-solid fa-circle-question"></i>
+                            <p id="quiz-target-pergunta">Carregando...</p>
+                        </div>
+
+                        <div class="quiz-options-list" id="quiz-target-opcoes"></div>
+
+                        <div class="quiz-control-actions">
+                            <button class="btn-primary-trigger" style="max-width: 250px;" onclick="validarRespostaSelecionada()">Confirmar Resposta</button>
+                            <button class="btn-secondary" id="quiz-btn-proxima" disabled onclick="avancarQuestaoQuiz()">Avançar Próxima</button>
+                        </div>
+
+                        <div class="quiz-inline-feedback hidden" id="quiz-box-feedback"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="panel-materiais" class="tab-content-panel">
+                <section class="dashboard-panel-card">
+                    <h3 class="section-title"><i class="fa-solid fa-folder-open"></i> Biblioteca de Arquivos e Guias Práticos</h3>
+                    <p class="section-subtitle">Acesse e faça o download de manuais técnicos oficiais para expandir o conhecimento do campo:</p>
+                    
+                    <div class="materials-layout-list">
+                        <a href="https://www.embrapa.br/documents/1355126/9111497/Manual+de+Agroecologia.pdf" target="_blank" class="material-download-row">
+                            <div class="material-meta-side">
+                                <div class="material-avatar-box" style="background: #fef2f2; color: #ef4444;"><i class="fa-solid fa-file-pdf"></i></div>
+                                <div class="material-info-text">
+                                    <h4>Cartilha do Solo Vivo 2026.pdf</h4>
+                                    <p>Manual prático completo da Embrapa sobre microrganismos benéficos, palhada de proteção e adubação orgânica.</p>
+                                </div>
+                            </div>
+                            <div class="material-action-indicator" style="color: var(--brand-green-mid);">
+                                <span>Baixar PDF</span><i class="fa-solid fa-download"></i>
+                            </div>
+                        </a>
+
+                        <a href="https://www.youtube.com/watch?v=kY3P8T1oYcI" target="_blank" class="material-download-row">
+                            <div class="material-meta-side">
+                                <div class="material-avatar-box" style="background: #eff6ff; color: #3b82f6;"><i class="fa-solid fa-video"></i></div>
+                                <div class="material-info-text">
+                                    <h4>Videoaula: Recuperação de Minas d'Água</h4>
+                                    <p>Vídeo prático demonstrando o cercamento de Áreas de Preservação Permanente e medições volumétricas de nascentes.</p>
+                                </div>
+                            </div>
+                            <div class="material-action-indicator" style="color: #3b82f6;">
+                                <span>Assistir Aula</span><i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <div id="panel-desafios" class="tab-content-panel">
+                <section class="dashboard-panel-card">
+                    <h3 class="section-title"><i class="fa-solid fa-trophy"></i> Desafios Agrinho 2026</h3>
+                    <p class="section-subtitle">Realize ações práticas na plataforma para liberar novos patamares na sua jornada:</p>
+                    
+                    <div class="timeline-track-vertical">
+                        <div class="timeline-node achieved">
+                            <div class="node-bullet"></div>
+                            <div class="node-content-card">
+                                <span class="node-tag">Concluído</span>
+                                <h4>Explorador do Campo</h4>
+                                <p>Acessou o portal escolar e leu as documentações basilares de Antônio Olinto.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-node" id="node-ch-quiz">
+                            <div class="node-bullet"></div>
+                            <div class="node-content-card">
+                                <span class="node-tag" id="tag-ch-quiz">Bloqueado</span>
+                                <h4>Mestre Legítimo do Conhecimento</h4>
+                                <p>Complete com sucesso um nível inteiro contendo 10 questões do Quiz sem cometer falhas.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-node" id="node-ch-sim">
+                            <div class="node-bullet"></div>
+                            <div class="node-content-card">
+                                <span class="node-tag" id="tag-ch-sim">Bloqueado</span>
+                                <h4>Eco-Guardião Nota 100</h4>
+                                <p>Combine os seletores do simulador técnico para atingir o score ecológico ideal de 100/100 pontos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="panel-progresso" class="tab-content-panel">
+                <section class="dashboard-panel-card">
+                    <h3 class="section-title"><i class="fa-solid fa-chart-line"></i> Meu Progresso Unificado</h3>
+                    <p class="section-subtitle">Gerenciamento dinâmico de metas atingidas nas trilhas escolares:</p>
+                    
+                    <div class="stats-grid-row">
+                        <div class="stat-box-card">
+                            <span class="val" id="meta-txt-missoes">1 / 3</span>
+                            <span class="lbl">Missões Ativas</span>
+                        </div>
+                        <div class="stat-box-card">
+                            <span class="val" id="meta-txt-quiz">0%</span>
+                            <span class="lbl">Precisão do Quiz</span>
+                        </div>
+                        <div class="stat-box-card">
+                            <span class="val" id="meta-txt-sim">--</span>
+                            <span class="lbl">Melhor Simulação</span>
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px solid var(--ui-border); padding-top: 30px;">
+                        <h4 style="text-align: center; margin-bottom: 25px; font-weight: 800;"><i class="fa-solid fa-medal" style="color: #eab308;"></i> Galeria Oficial de Conquistas</h4>
+                        <div class="gallery-shelf">
+                            <div class="medal-case unlocked" data-tip="Pioneiro do Solo"><i class="fa-solid fa-seedling"></i></div>
+                            <div class="medal-case" id="med-target-quiz" data-tip="Cérebro da Agroecologia"><i class="fa-solid fa-brain"></i></div>
+                            <div class="medal-case" id="med-target-sim" data-tip="Estrela do Agrinho 2026"><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="footer-badges-row">
+                <div class="footer-badge-item">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div class="footer-badge-meta"><h5>Inovação no Campo</h5><p>Soluções criativas rurais</p></div>
+                </div>
+                <div class="footer-badge-item">
+                    <i class="fa-solid fa-droplet"></i>
+                    <div class="footer-badge-meta"><h5>Água é Vida</h5><p>Preserve e monitore hoje</p></div>
+                </div>
+                <div class="footer-badge-item">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <div class="footer-badge-meta"><h5>Solo Fértil</h5><p>Produz sustento limpo</p></div>
+                </div>
+                <div class="footer-badge-item">
+                    <i class="fa-solid fa-shield-cat"></i>
+                    <div class="footer-badge-meta"><h5>Biodiversidade</h5><p>Respeite e proteja a fauna</p></div>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <div class="app-modal-overlay" id="global-modal">
+        <div class="modal-card">
+            <h3 id="modal-target-title">Título do Conteúdo</h3>
+            <p id="modal-target-body">Texto descritivo completo estruturado.</p>
+            <button class="btn-primary-trigger" onclick="fecharModalInfo()">Concluído, Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        const BANCO_QUIZ = [
+            // NÍVEL 0: INICIANTE
+            [
+                { p: "O que a palha seca jogada sobre a horta ou lavoura faz pelo solo?", o: ["Esquenta a terra até queimar a raiz", "Funciona como um cobertor, guardando a umidade da água", "Impede que o adubo faça efeito", "Serve apenas para juntar insetos ruins"], r: "B" },
+                { p: "Qual o principal benefício da rotação de culturas para a plantação?", o: ["Cansar o solo mudando de lugar", "Evitar o desgaste de um único nutriente e quebrar ciclos de pragas", "Aumentar o gasto com sementes híbridas", "Deixar a terra compactada e dura"], r: "B" },
+                { p: "O que acontece se o gado tiver acesso livre para beber água direto na nascente?", o: ["A água fica mais limpa com o movimento", "O pisoteio destrói as margens, causa erosão e contamina o olho d'água", "Aumenta o volume de água produzido pela fonte", "Ajuda a plantar novas árvores nativas"], r: "B" },
+                { p: "Qual a função da Mata Ciliar ao redor dos rios e riachos rurais?", o: ["Atuar como barreira física segurando enxurradas e poeira química", "Sombra para secar o leito dos rios", "Embelezar o campo sem ganho ecológico", "Atrair pragas para atacar as plantações"], r: "A" },
+                { p: "Como a agricultura familiar pode ajudar a reter água nas propriedades?", o: ["Construindo canais para esvaziar os banhados", "Mantendo solos cobertos e orgânicos que funcionam como esponjas", "Eliminando toda a vegetação das encostas", "Impermeabilizando o chão das áreas de cultivo"], r: "B" },
+                { p: "O que significa a sigla APP na legislação de proteção ambiental?", o: ["Área de Produção Intensiva", "Área de Preservação Permanente", "Associação de Produtores do Paraná", "Aplicação Prática de Defensivos"], r: "B" },
+                { p: "Qual bicho abaixo é considerado um grande aliado natural no controle de pulgões?", o: ["A lagarta da soja", "A joaninha", "O gafanhoto verde", "O percevejo marrom"], r: "B" },
+                { p: "Queimar o resto de palha de lavoura antiga provoca qual dano imediato?", o: ["Aduba a terra com nitrogênio de qualidade", "Mata a biologia viva e os microrganismos férteis do solo", "Aumenta a umidade acumulada na argila", "Melhora a fixação de raízes novas"], r: "B" },
+                { p: "Para onde devem ir as embalagens vazias de defensivos químicos após o uso?", o: ["Queimadas nos fundos da propriedade", "Devolvidas limpas nos postos de recolhimento oficiais", "Jogadas em valas de contenção de chuva", "Enterradas perto das cercas de divisa"], r: "B" },
+                { p: "O plantio em curvas de nível serve primordialmente para:", o: ["Facilitar o tráfego reto de tratores", "Reduzir a velocidade da água da chuva, evitando erosão", "Aumentar a área total de cultivo na baixada", "Acelerar o escoamento de nutrientes"], r: "B" }
+            ],
+            // NÍVEL 1: INTERMEDIÁRIO
+            [
+                { p: "Qual o processo básico executado na tríplice lavagem de recipientes químicos?", o: ["Enxaguar três vezes seguidas e jogar a água no rio", "Enxaguar três vezes, vertendo a água residual de volta no tanque de pulverização", "Lavar com sabão neutro três dias depois", "Deixar secar ao sol por três semanas consecutivas"], r: "B" },
+                { p: "O que são bioinsumos na agricultura agroecológica contemporânea?", o: ["Produtos químicos altamente concentrados em laboratório", "Defensivos e fertilizantes feitos de microrganismos ou matéria orgânica", "Sementes modificadas geneticamente para resistir a secas", "Combustíveis fósseis purificados para maquinários"], r: "B" },
+                { p: "Como as faixas de refúgio vegetal auxiliam no controle de pragas?", o: ["Atraem as pragas para longe, servindo de moradia para predadores benéficos", "Servem para colher lenha no inverno", "Bloqueiam totalmente a passagem de vento na lavoura", "Aumentam a acidez do solo das extremidades"], r: "A" },
+                { p: "A adubação verde consiste essencialmente em:", o: ["Pintar as folhas com tintas ricas em nitrogênio", "Plantio de plantas (como leguminosas) para serem incorporadas e nutrir a terra", "Usar apenas esterco fresco sem compostagem prévia", "Aplicar ureia química concentrada nas mudas jovens"], r: "B" },
+                { p: "O que a compactação do solo causada por maquinário pesado em dia chuvoso provoca?", o: ["Facilita a respiração das raízes profundas", "Reduz a infiltração de água, gerando enxurradas destrutivas", "Aumenta a fertilidade natural da camada superficial", "Ajuda na germinação rápida de sementes nativas"], r: "B" },
+                { p: "Qual elemento abaixo fixa o Nitrogênio no solo através de simbiose com plantas leguminosas?", o: ["Fósforo mineral solúvel", "Bactérias fixadoras (como o Rizóbio)", "Argila expandida", "Luz solar direta nas raízes expostas"], r: "B" },
+                { p: "Sistemas Agroflorestais (SAFs) são mais sustentáveis porque:", o: ["Eliminam a necessidade de qualquer árvore no entorno", "Combinam cultivos agrícolas com árvores arbóreas na mesma área", "Focam exclusivamente na produção de madeira de pinus", "Reduzem a biodiversidade animal da propriedade rural"], r: "B" },
+                { p: "O uso indiscriminado de defensivos de amplo espectro pode causar:", o: ["Aumento da população de polinizadores nativos", "A eliminação de insetos benéficos, gerando superpragas resistentes", "A limpeza permanente e mineralização dos lençóis hídricos", "A aceleração da fotossíntese foliar noturna"], r: "B" },
+                { p: "Qual a importância das abelhas na agricultura de produção ecológica?", o: ["Nenhuma, causam apenas riscos de picadas nos trabalhadores", "Polinizam as flores, garantindo a formação e qualidade de frutos e sementes", "Consumir lagartas nocivas nas lavouras de milho", "Produzir cera para impermeabilizar as sementes estocadas"], r: "B" },
+                { p: "O que indica a presença abundante de minhocas na camada superficial da terra?", o: ["Solo infértil, ácido e sem nutrientes disponíveis", "Solo saudável, aerado e rico em matéria orgânica ativa", "Excesso perigoso de umidade salina no subsolo", "Necessidade urgente de aplicação de calcário"], r: "B" }
+            ],
+            // NÍVEL 2: AVANÇADO
+            [
+                { p: "O que preceitua o Código Florestal Brasileiro sobre a largura mínima da APP de rios com menos de 10 metros de largura?", o: ["Mínimo de 10 metros de largura de mata nativa", "Mínimo de 30 metros de largura de mata protetora", "Apenas 5 metros são suficientes se houver grama", "Não há exigência de mata para rios estreitos"], r: "B" },
+                { p: "Como os fungos micorrízicos atuam na fisiologia das raízes vegetais?", o: ["Causando apodrecimento radicular agudo em períodos chuvosos", "Expandindo a rede de absorção de água e nutrientes, especialmente Fósforo", "Bloqueando a entrada de adubos orgânicos nas células", "Acelerando a evapotranspiração foliar em dias secos"], r: "B" },
+                { p: "O que caracteriza a técnica de manejo integrado de pragas (MIP)?", o: ["Aplicação preventiva semanal de químicos pesados", "Uso combinado de monitoramento, controle biológico e químico apenas quando necessário", "Eliminação total de qualquer ser vivo dentro da propriedade", "Substituição completa de insumos por adubação foliar isolada"], r: "B" },
+                { p: "A lixiviação é um problema grave no campo que representa:", o: ["O acúmulo de pedras na superfície devido ao vento forte", "O carregamento de nutrientes solúveis para as camadas profundas, longe das raízes", "A quebra mecânica de tratores por falta de lubrificação", "O processo de calagem excessiva no topo dos morros"], r: "B" },
+                { p: "Qual o impacto ecológico do descarte de efluentes de salas de ordenha sem tratamento?", o: ["Aumento do oxigênio disponível nos corpos hídricos", "Eutrofização de rios, provocando proliferação de algas e morte de peixes", "Melhoria na potabilidade das águas subterrâneas de poços", "Estabilização do pH de banhados naturais"], r: "B" },
+                { p: "A rotação de culturas utilizando braquiária em sistemas de Integração Lavoura-Pecuária (ILP) busca:", o: ["Secar a terra para o plantio de inverno", "Romper camadas compactadas e produzir palhada profunda de alta durabilidade", "Reduzir o teor de matéria orgânica do horizonte A do solo", "Eliminar a necessidade de calcário no sistema produtivo"], r: "B" },
+                { p: "O que define a calagem do solo e qual seu objetivo principal?", o: ["Aplicação de gesso para endurecer áreas de tráfego", "Aplicação de calcário para neutralizar a acidez e fornecer Cálcio e Magnésio", "Uso de argila calcinada para segurar água nas encostas", "Pulverização de enxofre líquido para matar lagartas"], r: "B" },
+                { p: "A alelopatia é um fenômeno biológico aplicável na agroecologia que consiste em:", o: ["Aceleração do crescimento por atração magnética de plantas", "Plantas que liberam substâncias químicas capazes de inibir ou estimular outras espécies", "Uso de feromônios sintéticos para desorientar pássaros", "Cruzamento genético tradicional entre cultivares distantes"], r: "B" },
+                { p: "Qual o papel do Cadastro Ambiental Rural (CAR) na gestão de propriedades?", o: ["Imposto territorial sindical cobrado anualmente do produtor", "Registro público eletrônico obrigatório para controle, monitoramento e planejamento ambiental", "Autorização prévia de venda de grãos para o exterior", "Certificado de calibração de pulverizadores tracionados"], r: "B" },
+                { p: "O uso de biochar (biocarvão) incorporado ao solo atua principalmente para:", o: ["Combustível de emergência para geadas intensas", "Aumentar a retenção de água, fixar carbono e servir de abrigo para microrganismos", "Elevar a velocidade de escoamento superficial das chuvas", "Substituir defensivos químicos contra formigas cortadeiras"], r: "B" }
+            ]
+        ];
+
+        // Estado do App
+        let nivelAtivo = 0;
+        let questaoAtiva = 0;
+        let historicoAcertosNivel = 0;
+        let totalMissoesCompletas = 1;
+        let recordeSimuladoPontos = 0;
+
+        // Inicialização automática do Quiz ao carregar a página
+        window.onload = function() {
+            carregarQuestaoQuiz();
+        };
+
+        // Troca de Abas Fluida
+        function navegarAba(idAba, elementoBotao) {
+            document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(idAba).classList.add('active');
+            elementoBotao.classList.add('active');
+        }
+
+        // Modais Popups Informativos
+        function exibirModalInfo(titulo, corpo) {
+            document.getElementById('modal-target-title').innerText = titulo;
+            document.getElementById('modal-target-body').innerText = corpo;
+            document.getElementById('global-modal').style.display = 'flex';
+        }
+        function fecharModalInfo() {
+            document.getElementById('global-modal').style.display = 'none';
+        }
+
+        // PROCESSAMENTO TÉCNICO DO SIMULADOR (ABA 1)
+        function rodarSimuladorDiagnostico() {
+            let s1 = parseInt(document.getElementById('sim-solo').value);
+            let s2 = parseInt(document.getElementById('sim-agua').value);
+            let s3 = parseInt(document.getElementById('sim-insumos').value);
+            let s4 = parseInt(document.getElementById('sim-fauna').value);
+
+            let mediaGeral = Math.round((s1 + s2 + s3 + s4) / 4);
+            
+            // Renderização das Notas no Painel
+            document.getElementById('txt-score-geral').innerHTML = `${mediaGeral}<span>/100</span>`;
+            
+            // Distribuição de notas por categorias baseadas no formulário
+            document.getElementById('txt-bar-1').innerText = `${s1}%`;
+            document.getElementById('fill-bar-1').style.width = `${s1}%`;
+            
+            document.getElementById('txt-bar-2').innerText = `${s2}%`;
+            document.getElementById('fill-bar-2').style.width = `${s2}%`;
+            
+            let notaGestao = Math.round((s3 + s4) / 2);
+            document.getElementById('txt-bar-3').innerText = `${notaGestao}%`;
+            document.getElementById('fill-bar-3').style.width = `${notaGestao}%`;
+
+            let logsTarget = document.getElementById('diagnostico-logs-target');
+            logsTarget.innerHTML = '';
+
+            let badgeStatus = document.getElementById('badge-score-status');
+            
+            if (mediaGeral === 100) {
+                badgeStatus.innerText = "EXCELENTE!";
+                badgeStatus.className = "badge-status-output success";
+                logsTarget.innerHTML += `<div class="log-bubble success"><i class="fa-solid fa-circle-check"></i> Práticas Ideais! Manejos perfeitamente enquadrados nos critérios de sustentabilidade do Agrinho 2026. Parabéns!</div>`;
+                
+                // Desbloqueia Desafio do Simulador se não ativado
+                let nodeSim = document.getElementById('node-ch-sim');
+                if(!nodeSim.classList.contains('achieved')) {
+                    nodeSim.classList.add('achieved');
+                    document.getElementById('tag-ch-sim').innerText = "Concluído";
+                    document.getElementById('med-target-sim').classList.add('unlocked');
+                    totalMissoesCompletas++;
+                }
+            } else {
+                badgeStatus.innerText = "CRÍTICO";
+                badgeStatus.className = "badge-status-output";
+                
+                if(s1 < 50) logsTarget.innerHTML += `<div class="log-bubble danger"><i class="fa-solid fa-triangle-exclamation"></i> <b>Alerta de Cultivo:</b> Aração convencional excessiva quebra a biologia microbiana e causa erosão severa na terra. Mude para Plantio Direto!</div>`;
+                if(s2 < 50) logsTarget.innerHTML += `<div class="log-bubble danger"><i class="fa-solid fa-droplet-slash"></i> <b>Alerta Hídrico:</b> O livre acesso do gado compacta as margens e assoreia as minas d'água de Antônio Olinto. Instale cercas protetoras.</div>`;
+                if(s3 < 50) logsTarget.innerHTML += `<div class="log-bubble danger"><i class="fa-solid fa-skull-crossbones"></i> <b>Alerta Químico:</b> O uso descontrolado de agroquímicos destrói os polinizadores essenciais da horta. Adote o Manejo Integrado (MIP).</div>`;
+            }
+
+            if(mediaGeral > recordeSimuladoPontos) recordeSimuladoPontos = mediaGeral;
+            atualizarPainelProgressoGeral();
+        }
+
+        // MOTOR DO QUIZ DE ALTA PERFORMANCE (ABA 3)
+        function selecionarNivelQuiz(idxNivel) {
+            nivelAtivo = idxNivel;
+            questaoAtiva = 0;
+            historicoAcertosNivel = 0;
+            
+            document.querySelectorAll('.level-select-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`tab-lvl-${idxNivel}`).classList.add('active');
+            
+            let rotulos = ["Fácil (Iniciante)", "Médio (Intermediário)", "Difícil (Avançado)"];
+            document.getElementById('quiz-lbl-nivel').innerText = `Nível: ${rotulos[idxNivel]}`;
+            
+            carregarQuestaoQuiz();
+        }
+
+        function carregarQuestaoQuiz() {
+            // Oculta feedback anterior
+            let fb = document.getElementById('quiz-box-feedback');
+            fb.classList.add('hidden');
+            document.getElementById('quiz-btn-proxima').disabled = true;
+
+            let dadosQuestao = BANCO_QUIZ[nivelAtivo][questaoAtiva];
+            document.getElementById('quiz-lbl-contador').innerText = `Questão: ${questaoAtiva + 1} / 10`;
+            document.getElementById('quiz-target-pergunta').innerText = dadosQuestao.p;
+
+            let areaOpcoes = document.getElementById('quiz-target-opcoes');
+            areaOpcoes.innerHTML = '';
+
+            const mapeamentoLetras = ['A', 'B', 'C', 'D'];
+            dadosQuestao.o.forEach((opcaoTexto, index) => {
+                areaOpcoes.innerHTML += `
+                    <label class="option-item-row" onclick="destacarOpcaoQuizRadio(this)">
+                        <input type="radio" name="opt-quiz-choice" value="${mapeamentoLetras[index]}">
+                        <span><b>${mapeamentoLetras[index]} )</b> ${opcaoTexto}</span>
+                    </label>
+                `;
+            });
+        }
+
+        function destacarOpcaoQuizRadio(elementoLabel) {
+            document.querySelectorAll('.option-item-row').forEach(l => l.classList.remove('selected'));
+            elementoLabel.classList.add('selected');
+            elementoLabel.querySelector('input').checked = true;
+        }
+
+        function validarRespostaSelecionada() {
+            let alternativas = document.getElementsByName('opt-quiz-choice');
+            let escolhida = "";
+            for(let a of alternativas) {
+                if(a.checked) escolhida = a.value;
+            }
+
+            let fb = document.getElementById('quiz-box-feedback');
+            fb.classList.remove('hidden');
+
+            if(escolhida === "") {
+                fb.className = "quiz-inline-feedback wrong";
+                fb.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Seletor Vazio! Escolha uma alternativa antes de confirmar.`;
+                return;
+            }
+
+            let respostaCorreta = BANCO_QUIZ[nivelAtivo][questaoAtiva].r;
+
+            if(escolhida === respostaCorreta) {
+                fb.className = "quiz-inline-feedback correct";
+                fb.innerHTML = `<i class="fa-solid fa-circle-check"></i> <b>Resposta Exata!</b> O conceito está correto e atende perfeitamente aos manuais agroecológicos oficiais.`;
+                historicoAcertosNivel++;
+            } else {
+                fb.className = "quiz-inline-feedback wrong";
+                fb.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <b>Alternativa Incorreta!</b> Esse manejo agride o ecossistema. Revise a matéria na aba Agroecologia para entender o processo correto.`;
+            }
+
+            document.getElementById('quiz-btn-proxima').disabled = false;
+            atualizarPainelProgressoGeral();
+        }
+
+        function avancarQuestaoQuiz() {
+            if(questaoAtiva < 9) {
+                questaoAtiva++;
+                carregarQuestaoQuiz();
+            } else {
+                alert(`Módulo finalizado! Você acertou ${historicoAcertosNivel} de 10 questões no nível selecionado.`);
+                
+                // Liberação de Desafio se fechou o nível com gabarito perfeito (10/10)
+                if(historicoAcertosNivel === 10) {
+                    let nodeQuiz = document.getElementById('node-ch-quiz');
+                    if(!nodeQuiz.classList.contains('achieved')) {
+                        nodeQuiz.classList.add('achieved');
+                        document.getElementById('tag-ch-quiz').innerText = "Concluído";
+                        document.getElementById('med-target-quiz').classList.add('unlocked');
+                        totalMissoesCompletas++;
+                    }
+                }
+                
+                questaoAtiva = 0;
+                historicoAcertosNivel = 0;
+                carregarQuestaoQuiz();
+            }
+            atualizarPainelProgressoGeral();
+        }
+
+        // SISTEMA DE SINCRONIZAÇÃO DE PROGRESSO E GAMIFICAÇÃO (ABA 6)
+        function atualizarPainelProgressoGeral() {
+            document.getElementById('meta-txt-missoes').innerText = `${totalMissoesCompletas} / 3`;
+            
+            let precisaoCalculada = Math.round((historicoAcertosNivel / (questaoAtiva === 0 ? 1 : questaoAtiva)) * 100);
+            if(precisaoCalculada > 100) precisaoCalculada = 100;
+            document.getElementById('meta-txt-quiz').innerText = `${precisaoCalculada}%`;
+            
+            document.getElementById('meta-txt-sim').innerText = recordeSimuladoPontos > 0 ? `${recordeSimuladoPontos}/100` : "--";
+        }
+    </script>
+</body>
+</html>
